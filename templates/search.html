@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+
+{% block header %}
+<div class="alert alert-primary" role="alert">
+  <h3>SNS</h3>
+</div>
+{% endblock header %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+  <form action="" method="get">
+    <input name="query" value="{{ request.GET.query }}" type="text">
+    <button type="submit">検索する</button>
+  </form>
+
+  {% for item in object_list %}
+  <div class="alert alert-success" role="alert">
+    <p>タイトル : <a href="{% url 'detail' item.pk %}">{{ item.title }}</a></p>
+    <p>投稿者 : {{item.author}}</p>
+    <a href="#" class="btn btn-primary disable" role="button" aria-pressed="true">いいね {{item.good}}件</a>
+    <a href="#" class="btn btn-secondary disable" role="button" aria-pressed="true">既読 {{item.read}}人</a>
+  </div>
+  {% endfor %}
+  <a href="{% url 'logout' %}">logout</a>
+</div>
+{% else %}
+ログインしてください
+{% endif %}
+{% endblock content %}
